@@ -1,6 +1,13 @@
-## Welcome to GitHub Pages
+## Crear y gestionar nuestro servidor de Git
 
-You can use the [editor on GitHub](https://github.com/juanantoniogisbert/Practica01.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Primeramente vamos a proceder a instalar [GitLab](https://about.gitlab.com/install/#ubuntu) en nuestro sistema, en este caso como estamos trabajando con [Ubuntu](https://ubuntu.com/) instalaremos la versión para el mismo.
+
+Con los siguientes comandos instalamos y configuramos la dependencias necesarias.
+
+```markdown
+$ sudo apt-get update
+$ sudo apt-get install -y curl openssh-server ca-certificates
+```
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
