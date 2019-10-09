@@ -6,14 +6,72 @@ Con los siguientes comandos instalamos y configuramos la dependencias necesarias
 
 ```markdown
 $ sudo apt-get update
-$ sudo apt-get install -y curl openssh-server ca-certificates
+$ sudo apt-get install ca-certificates curl openssh-server postfix
+```
+### Repositories en GitLab
+
+El siguente paso es añadir los repositorios de GitLab.
+```markdown
+$ curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
 ```
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+<!---------------------CAPTURA1----------------------------->
 
-### Markdown
+Ahora, descargamos el script de GitLab que agregará los repositorios a nuestro sistema y lo ejecutamos.
+```markdown
+$ curl -LO https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh
+$ sudo bash /tmp/script.deb.sh
+```
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+<!---------------------CAPTURA2----------------------------->
+
+
+Una vez terminado estos dos pasos anteriores porcedemos a instalar GitLab.
+```markdown
+$ sudo apt-get install gitlab-ce
+```
+<!---------------------CAPTURA3----------------------------->
+
+El siguiente paso vamos a revisar que nuestro cortafuegos no bloquee las conexión de GitLab.
+
+Si en la salida nos dice que no está inactivo, no debemos hacer nada más pues no está bloqueando nada. Si está activo, debemos asegurarnos de que el servicio SSH y los puertos 80 y 443 estén permitidos.
+```markdown
+$ sudo ufw status
+$ sudo ufw allow http
+$ sudo ufw allow https
+$ sudo ufw allow OpenSSH
+```
+<!---------------------CAPTURA4----------------------------->
+
+Una vez comprobado esto, ya podemos proceder a configurar GitLab. 
+```markdown
+$ sudo nano /etc/gitlab/gitlab.rb
+```
+Aquí vamos a buscar external_url y pondremos el nombre del dominio o IP de la máquina donde lo hemos instalado
+
+<!---------------------CAPTURA5----------------------------->
+
+En caso de que hayamos especificado un dominio, vamos a buscar y editar de la siguiente forma:
+```markdown
+letsencrypt['enable'] = true
+letsencrypt['contact_emails'] = ['mi@dominio.com']
+```
+
+Una vez terminado, salimos y vamos a reconfigurar GitLab:
+```markdown
+$ sudo gitlab-ctl reconfigure
+```
+
+
+
+
+
+
+
+
+
+
+
 
 ```markdown
 Syntax highlighted code block
