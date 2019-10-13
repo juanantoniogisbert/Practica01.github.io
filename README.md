@@ -4,63 +4,37 @@ Primeramente vamos a proceder a instalar [GitLab](https://about.gitlab.com/insta
 
 Con los siguientes comandos instalamos y configuramos la dependencias necesarias.
 
+### 1. Instalar y configurar las dependencias necesarias
+
 ```markdown
 $ sudo apt-get update
-$ sudo apt-get install ca-certificates curl openssh-server postfix
+$ sudo apt-get install -y curl openssh-server ca-certificates
 ```
-### Repositories en GitLab
+
+Instalamos Postfix para enviar correos electrónicos de notificación, despues en su configuracion podremos "sin configuracion" para luego poner nuestra direccion en localhost.
+
+```markdown
+$ sudo apt-get install -y postfix
+```
+
+### Agregar el repositorio de paquetes de GitLab e instalar los paquetes
 
 El siguente paso es añadir los repositorios de GitLab.
 ```markdown
-$ curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
 ```
 
-<!---------------------CAPTURA1----------------------------->
+En el siguiente comando podremos nuestra direccion de localhost para poder accerder atraves del navegador.
 
-Ahora, descargamos el script de GitLab que agregará los repositorios a nuestro sistema y lo ejecutamos.
 ```markdown
-$ curl -LO https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh
-$ sudo bash /tmp/script.deb.sh
+$ sudo EXTERNAL_URL="http://localhost:4006" apt-get install gitlab-ee
 ```
 
-<!---------------------CAPTURA2----------------------------->
+Una vez realiza esta instalacion en nuestro navegadores escribiremos "http://localhost:4006" 
 
+<!----CAPTURA1-------->
 
-Una vez terminado estos dos pasos anteriores porcedemos a instalar GitLab.
-```markdown
-$ sudo apt-get install gitlab-ce
-```
-<!---------------------CAPTURA3----------------------------->
-
-El siguiente paso vamos a revisar que nuestro cortafuegos no bloquee las conexión de GitLab.
-
-Si en la salida nos dice que no está inactivo, no debemos hacer nada más pues no está bloqueando nada. Si está activo, debemos asegurarnos de que el servicio SSH y los puertos 80 y 443 estén permitidos.
-```markdown
-$ sudo ufw status
-$ sudo ufw allow http
-$ sudo ufw allow https
-$ sudo ufw allow OpenSSH
-```
-<!---------------------CAPTURA4----------------------------->
-
-Una vez comprobado esto, ya podemos proceder a configurar GitLab. 
-```markdown
-$ sudo nano /etc/gitlab/gitlab.rb
-```
-Aquí vamos a buscar external_url y pondremos el nombre del dominio o IP de la máquina donde lo hemos instalado
-
-<!---------------------CAPTURA5----------------------------->
-
-En caso de que hayamos especificado un dominio, vamos a buscar y editar de la siguiente forma:
-```markdown
-letsencrypt['enable'] = true
-letsencrypt['contact_emails'] = ['mi@dominio.com']
-```
-
-Una vez terminado, salimos y vamos a reconfigurar GitLab:
-```markdown
-$ sudo gitlab-ctl reconfigure
-```
+![Alt text](images/captura1.png?raw=true "Title") 
 
 
 
