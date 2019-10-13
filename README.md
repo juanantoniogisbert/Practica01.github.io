@@ -32,45 +32,47 @@ $ sudo EXTERNAL_URL="http://localhost:4006" apt-get install gitlab-ee
 
 Una vez realiza esta instalacion en nuestro navegadores escribiremos "http://localhost:4006" 
 
-<!----CAPTURA1-------->
-
 ![Alt text](images/captura1.png?raw=true "Title") 
 
+Despues vamos siguiendo los pasos hasta que accedemos a GitLab.
 
+![Alt text](images/captura2.png?raw=true "Title")
 
+### Realizar labores de administración inicial como por ejemplo:
 
+- Cambiar el puerto de acceso.
 
-
-
-
-
-
-
+Para cambiar el puerto de acceso tenemos que camviar esta linea "external_url 'http://localhost:4004'" para ello tendremos que ir al siguiente fichero y modificarlo.
 
 ```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+$ sudo -e /etc/gitlab/gitlab.rb
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+despues tendremos que hacer el siguiento comando para reconfigurar.
 
-### Jekyll Themes
+```markdown
+$ sudo gitlab-ctl reconfigure
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/juanantoniogisbert/Practica01.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+![Alt text](images/captura3.png?raw=true "Title")
 
-### Support or Contact
+- Impedir que usuarios nuevos puedan modificar su identificador.
+<!------------------------------------------------------------------------------------------------->
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+- Modificar el tiempo de expiración de la sesión.
+
+Por defecto el tiempo esta en 60000 segundos nostros vamos a cambiarlo a 60 segundos para ello editos el siguiente fichero y modificamos la siguiente linea:
+
+```markdown
+$ sudo nano /etc/gitlab/gitlab.rb
+postgresql['idle_in_transaction_session_timeout'] = "60"
+```
+![Alt text](images/captura4.png?raw=true "Title")
+
+### Detallar ejemplos de procesos (vía llamadas a la API) como:
+
+- Alta, modificación y borrado de usuarios.
+- Bloqueo/desbloqueo de usuarios.
+- Establecer usuario como administrador.
+- Creación de proyectos.
+
