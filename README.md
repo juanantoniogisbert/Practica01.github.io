@@ -57,17 +57,17 @@ $ sudo gitlab-ctl reconfigure
 ![Alt text](images/captura3.png?raw=true "Title")
 
 - Impedir que usuarios nuevos puedan modificar su identificador.
-<!------------------------------------------------------------------------------------------------->
+
+Modificaremos el siguiente fichero, descomentaremos la linea y la pondremos a false.
+```markdown
+$ sudo gitlab-ctl reconfigure
+gitlab_rails['gitlab_username_changing_enabled'] = false
+```
+
+![Alt text](images/captura4.png?raw=true "Title")
 
 - Modificar el tiempo de expiración de la sesión.
 
-Por defecto el tiempo esta en 60000 segundos nostros vamos a cambiarlo a 60 segundos para ello editos el siguiente fichero y modificamos la siguiente linea:
-
-```markdown
-$ sudo nano /etc/gitlab/gitlab.rb
-postgresql['idle_in_transaction_session_timeout'] = "60"
-```
-![Alt text](images/captura4.png?raw=true "Title")
 
 ### Detallar ejemplos de procesos (vía llamadas a la API) como:
 
